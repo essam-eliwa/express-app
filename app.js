@@ -11,7 +11,7 @@ import usersRouter from "./routes/users.js";
 //Read the current directory name
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
-console.log(__dirname);
+console.log(`Project Root dir : ${__dirname}`);
 
 let app = express();
 
