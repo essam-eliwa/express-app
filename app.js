@@ -5,8 +5,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import { fileURLToPath } from "url";
 
-import indexRouter from "./routes/index.js";
-import usersRouter from "./routes/users.js";
+import router from "./routes/index.js";
 
 //Read the current directory name
 export const __filename = fileURLToPath(import.meta.url);
@@ -36,8 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 console.log("ENV: ", app.get('env'));
 
 //setup routes
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', router);
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -50,6 +48,6 @@ app.use(function(err, req, res, next) {
     res.render('pages/error');
   });
 
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 3001);
 
   export default app;
