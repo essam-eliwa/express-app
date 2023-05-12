@@ -11,7 +11,7 @@ lerna-debug.log*
 *.mp4
 
 # ignore all files starting with . or ~
-# .*
+.*
 ~*
 
 # ignore .DS_Store
