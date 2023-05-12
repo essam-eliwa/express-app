@@ -10,7 +10,6 @@ import app from '../app.js';
 import { createServer } from 'http';
 import dotenv from 'dotenv'
 dotenv.config()
-//console.log(dotenv.config());
 
 /**
  * Get port from environment and store in Express.
@@ -20,7 +19,7 @@ const PORT = (process.env.PORT || '8000');
 const HOST = (process.env.HOST || 'localhost');
 app.set('port', PORT);
 app.set('host', HOST);
-app.set('env', 'development');
+app.set('env', process.env.ENV);
 
 
 /**
