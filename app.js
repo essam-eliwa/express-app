@@ -34,6 +34,7 @@ app.use(cookieParser());
 //setup static folder for serving static files in Express
 app.use(express.static(path.join(__dirname, 'public')));
 console.log("ENV: ", app.get('env'));
+
 //setup routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -44,7 +45,6 @@ app.use(function(err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     
-    console.error("Error Status: ", err.status);
     // render the error page
     res.status(err.status || 500);
     res.render('pages/error');
