@@ -18,6 +18,7 @@ npm install
 ```
 
 ```.env
+#.env
 WEATHER_APPID="Your API KEY"
 ENV="development"
 PORT=3000
