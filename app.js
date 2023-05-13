@@ -33,11 +33,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 //setup static folder for serving static files in Express
 app.use(express.static(path.join(__dirname, 'public')));
-console.log("ENV: ", app.get('env'));
 
 //setup routes
-app.use('/about', about_router);
 app.use('/', index_router);
+app.use('/about', about_router);
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -50,6 +49,5 @@ app.use(function(err, req, res, next) {
     res.render('pages/error');
   });
 
-  app.set('port', app.get('port'));
-
-  export default app;
+//console.log("ENV: ", app.get('env'));
+export default app;
