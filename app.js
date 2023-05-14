@@ -4,9 +4,12 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import { fileURLToPath } from "url";
+import fs from "fs";
 
+//import routes
 import index_router from "./routes/index.js";
 import about_router from "./routes/about.js";
+import products_router from "./routes/products.js";
 
 //Read the current directory name
 export const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +22,15 @@ let app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(logger("dev"));
+//Setup middlewares
+
+//setup logger middleware
+app.use(logger('tiny', {
+  stream: fs.createWriteStream('./logs/access.log', {flags: 'a'})
+}));
+app.use(logger(":method :url :status :res[content-length] - :response-time ms"));
+
+//setup json middleware
 app.use(express.json());
 
 //When extended property is set to true, the URL-encoded data will be parsed with the qs library.
@@ -37,6 +48,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //setup routes
 app.use('/', index_router);
 app.use('/about', about_router);
+app.use('/products', products_router);
+//app.use('/products', logger('combined'), products_router);
 
 // error handler
 app.use(function(err, req, res, next) {
