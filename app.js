@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 
 import index_router from "./routes/index.js";
 import about_router from "./routes/about.js";
+import orders_router from "./routes/orders.js";
 
 //Read the current directory name
 export const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +20,7 @@ let app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(logger("dev"));
+app.use(logger("common"));
 app.use(express.json());
 
 //When extended property is set to true, the URL-encoded data will be parsed with the qs library.
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //setup routes
 app.use('/', index_router);
 app.use('/about', about_router);
+app.use('/orders', orders_router);
 
 // error handler
 app.use(function(err, req, res, next) {
