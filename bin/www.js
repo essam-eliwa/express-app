@@ -40,7 +40,7 @@ mongoose
     console.log(`Server running at http://${HOST}:${PORT}/`);
   })
   .catch((error) => {
-    console.log("error to connect");
+    console.error("Mongo Error: " + error);
   });
 
 /**
