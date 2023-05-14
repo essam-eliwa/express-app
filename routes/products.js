@@ -1,4 +1,5 @@
 import { Router } from "express";
+import Product from "../models/productsModel.js";
 
 const router = Router();
 
@@ -13,7 +14,19 @@ router.get("/:id", (req, res, next) => {
 });
 
 //POST a single product: products/
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
+    const product = {  //create a new product
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl
+    };
+    try {
+        const newProduct = await Product.create(product);
+        res.status(201).json(newProduct);
+    }   catch (err) {   //if there is an error, send it to the error handler
+        next(err);
+    }
     res.json({ message: "create a new product" });
 });
 
