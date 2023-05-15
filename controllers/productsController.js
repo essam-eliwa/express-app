@@ -31,7 +31,8 @@ const getProductById = async ({ params: { id } }, res, next) => {
   try {
     const product = await Product.findById(id);
     if (product) {
-      return res.status(200).json(product);
+      //return res.status(200).json(product);
+      return res.render("pages/view-product", { title: "Product Details", product: product });
     }
     throw new Error(`Product with id ${id} not found`);
   } catch (err) {

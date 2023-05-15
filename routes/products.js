@@ -24,7 +24,7 @@ const router = Router();
 // GET products: products/
 router.get("/", getProducts);
 
-// GET a single product: products/:id
+// GET a single product: products/find/:id
 router.get("/find/:id", getProductById);
 
 
