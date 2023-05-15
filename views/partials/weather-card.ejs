@@ -1,0 +1,43 @@
+  <!--Weather Card-->
+  <div >
+    <section class="vh-100" style="background-color: #ffffff;">
+      <div class="container py-5 h-50">
+    
+        <div class="row d-flex justify-content-center align-items-center h-50">
+          <div class="col-md-8 col-lg-6 col-xl-4">
+    
+            <div class="card" style="color: #4B515D; border-radius: 35px;">
+              <div class="card-body p-4">
+    
+                <div class="d-flex">
+                  <h4 class="font-weight-bold flex-grow-1"><%= weatherObj.city %></h4>
+                  <h6><%= weatherObj.country %></h6>
+                </div>
+    
+                <div class="d-flex flex-column text-center mt-5 mb-4">
+                  <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> <%= weatherObj.temp %>°C </h6>
+                  <span class="medium" style="color: #868B94"><%= weatherObj.main %></span>
+                </div>
+    
+                <div class="d-flex align-items-center">
+                  <div class="flex-grow-1" style="font-size: 1rem;">
+                    <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1"> Wind: <%= weatherObj.wind %> km/h
+                      </span></div>
+                    <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1"> Humidity : <%= weatherObj.humidity %>% </span>
+                    </div>
+                  </div>
+                  <div>
+                    <img src="<%= weatherObj.iconUrl %>"
+                      width="100px">
+                  </div>
+                </div>
+    
+              </div>
+            </div>
+    
+          </div>
+        </div>
+    
+      </div>
+    </section>
+  </div>

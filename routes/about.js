@@ -3,7 +3,7 @@ var router = Router();
 
 /* GET /about page. */
 router.get('/', function(req, res, next) {
-  res.send('About this wiki');
+  res.send('About this demo application');
 });
 
 /* GET /about/test page. */
