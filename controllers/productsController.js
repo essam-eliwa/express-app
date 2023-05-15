@@ -12,7 +12,8 @@ const getProducts = async (req, res, next) => {
           return dateA - dateB;
         });
       }
-      res.json(products);
+      //res.json(products);
+      res.render("pages/products", { title: "Products", products: products });
     }) //get all products
     .catch((err) => {
       next(err);
@@ -59,7 +60,8 @@ const createProduct = async (req, res, next) => {
     //console.log(product);
     try {
       const newProduct = await Product.create(product);
-      res.status(201).json(newProduct);
+      //res.status(201).json(newProduct);
+      res.redirect("/products");
     } catch (err) {
       //if there is an error, send it to the error handler
       next(err);
@@ -67,8 +69,20 @@ const createProduct = async (req, res, next) => {
   };
 
 // Update a product
+const updateProduct = async (req, res, next) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Delete a product
+const deleteProduct = async (req, res, next) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+};
 
 // export all the controller functions
 export { getProducts, getProductById, createProduct };
