@@ -19,9 +19,6 @@ const PORT = process.env.PORT || "8000";
 const HOST = process.env.HOST || "localhost";
 const MURI = process.env.ATLAS_URI;
 
-app.set("port", PORT);
-app.set("host", HOST);
-app.set("env", process.env.ENV);
 
 /**
  * Create HTTP server.
