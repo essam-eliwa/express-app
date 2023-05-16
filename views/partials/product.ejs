@@ -4,8 +4,11 @@
         <div class="card-body">
             <h5 class="card-title"><%= product.name %></h5>
             <p class="card-text"><%= product.description %></p>
-            <p class="card-text"><%= product.price %> EGP <a href="/products/find/<%= product._id %>" class="btn btn-primary">View</a></p>
-            
+            <p class="card-text"><%= product.price %> EGP </p>
+            <a href="/products/find/<%= product._id %>" class="btn btn-primary">View</a>
+            <a href="/products/edit/<%= product._id %>" class="btn btn-warning">Edit</a>
+
+            <button id="del" class="btn btn-danger" data-id="<%= product._id %>">Delete</button>
         </div>
     </div>
 </div>

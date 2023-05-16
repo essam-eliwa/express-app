@@ -12,34 +12,75 @@
     <br><br><br>
     <div>
         <div class="col-md-12">
-            <h1 class="display-5 text-center">Add Product</h1>
+            <h1 class="display-5 text-center"><%= title %></h1>
         </div>
     </div>
 </div>
 
 <div class = "row m-2 justify-content-center">
-<form action="/products/add" method="POST" enctype="multipart/form-data">
+<form action="/products/add" method="post" enctype="multipart/form-data">
     <div class="form-group">
       <label for="name">Name:</label>
-      <input type="text" class="form-control" id="name" name="name" required>
+      <input type="text" class="form-control" id="name" name="name" value="<%=product.name %>" required>
     </div>
     <div class="form-group">
       <label for="price">Price:</label>
-      <input type="number" step=".01" class="form-control" id="price" name="price" required>
+      <input type="number" step=".01" class="form-control" id="price" name="price" value="<%=product.price %>" required>
     </div>
     <div class="form-group">
       <label for="description">Description:</label>
-      <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+      <textarea class="form-control" id="description" name="description" rows="3" required><%=product.description%></textarea>
     </div>
+
     <div class="form-group">
       <label for="image">Image:</label>
       <input type="file" class="form-control-file" id="image" name="image" required>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <% if (mode==='edit') { %>
+    <div id="editBtn" class="btn btn-primary">edit</div>
+    <% } else { %>
+    <button type="submit" class="btn btn-primary">Add</button>
+    <% } %>
   </form>
 </div>
 
-    
+<% if (mode==='edit') { %>
+  <input type="hidden" name="productId" value="<%= product._id %>">
+  <input type="hidden" name="_method" value="PATCH">
+  <div class="container-fluid">
+  <img src="/<%= product.imageUrl %>" class="card-img-top w-25 p-2 rounded mx-auto d-block" alt="<%= product.name %> image">
+</div>
+  <% } %>
+
+  <script>
+        
+    $(document).ready(function() {
+        $('#editBtn').click(function() {
+          console.log('Edit button clicked');
+          console.log($('#name').val());
+          console.log($('#price').val());
+          console.log($('#description').val());
+          console.log($('#image').val());
+            $.ajax({
+                url: `/products/edit/<%= product._id %>`,
+                method: 'PATCH',
+                data: {
+                  name: $('#name').val(),
+                  price: $('#price').val(),
+                  description: $('#description').val(),
+                },
+
+                success: function(response) {
+                    // Reload the page to show updated product list
+                    window.location.reload();
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script>
 
     <%- include('../partials/footer') %>
     <script src="/js/script.js"></script>

@@ -17,6 +17,29 @@
             <% }); %>
         </div>
     </div>
+
+    <script>
+        
+        $(document).ready(function() {
+            
+            $('#del').click(function() {
+                console.log('Delete button clicked');
+                const productId = $(this).data('id');
+                $.ajax({
+                    url: `/products/${productId}`,
+                    method: 'DELETE',
+                    success: function(response) {
+                        // Reload the page to show updated product list
+                        window.location.reload();
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+    
     <%- include('../partials/footer') %>
 </body>
 </html>

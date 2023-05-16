@@ -1,4 +1,5 @@
 
+import { mongo } from "mongoose";
 import Product from "../models/productsModel.js";
 
 // Get all products
@@ -29,6 +30,9 @@ const getProducts = async (req, res, next) => {
 // you can write: const getProductById = async ({ params: { id } }, res, next) => {
 const getProductById = async ({ params: { id } }, res, next) => {
   try {
+    if (!mongo.ObjectId.isValid(id) ) {
+      return res.status(400).json({ message: `Error: Invalid product ID ${id}` });
+    }
     const product = await Product.findById(id);
     if (product) {
       //return res.status(200).json(product);
@@ -37,9 +41,9 @@ const getProductById = async ({ params: { id } }, res, next) => {
     throw new Error(`Product with id ${id} not found`);
   } catch (err) {
     console.log(err.message);
-    if (err.name === 'CastError' && err.kind === 'ObjectId') {
-        return res.status(400).json({ message: "Invalid product ID" });
-      }
+    // if (err.name === 'CastError' && err.kind === 'ObjectId') {
+    //     return res.status(400).json({ message: "Error: Invalid product ID" });
+    //   }
       next(err);
   } finally {
     console.log("Finally Block executed");
@@ -72,18 +76,67 @@ const createProduct = async (req, res, next) => {
 // Update a product
 const updateProduct = async (req, res, next) => {
   try {
+    const id = req.params.id;
+    console.log(req.body);
+    if (!mongo.ObjectId.isValid(id) ) {
+      return res.status(400).json({ message: `Error: Invalid product ID ${id}` });
+    }
+    const product = await Product.findOneAndUpdate({ _id: id }, req.body, {
+      new: true,
+      runValidators: true,
+      });
+      console.log(product);
+    if (product) {
+      res.status(200).json(product);
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }
+
   } catch (err) {
     next(err);
   }
 };
 
-// Delete a product
-const deleteProduct = async (req, res, next) => {
+const updateProductForm = async ({ params: { id } }, res, next) => {
   try {
+    if (!mongo.ObjectId.isValid(id) ) {
+      return res.status(400).json({ message: `Error: Invalid product ID ${id}` });
+    }
+
+    const product = await Product.findById(id);
+    console.log(product);
+    if (product) {
+      //return res.status(200).json(product);
+      return res.render("pages/add-product", { title: "Edit Product", product: product, mode: 'edit' });
+    }
+    throw new Error(`Product with id ${id} not found`);
+    
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+// Delete a product
+const deleteProduct = async ({ params: { id } }, res, next) => {
+
+  try {
+    if (!mongo.ObjectId.isValid(id) ) {
+      return res.status(400).json({ message: `Error: Invalid product ID ${id}` });
+    }
+    //const product = await Product.findById(req.params.id);
+    const product = await Product.findOneAndDelete({ _id: id });
+    if (product) {
+      // await product.remove();
+      //res.json({ message: "Product removed" });
+      res.status(200).json({ message: "Product removed" });
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }
   } catch (err) {
     next(err);
   }
 };
 
 // export all the controller functions
-export { getProducts, getProductById, createProduct };
+export { getProducts, getProductById, createProduct, updateProduct, deleteProduct,updateProductForm };

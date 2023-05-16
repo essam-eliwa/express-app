@@ -4,6 +4,9 @@ import {
   createProduct,
   getProductById,
   getProducts,
+  updateProduct,
+  deleteProduct,
+  updateProductForm
 } from "../controllers/productsController.js";
 
 const storage = multer.diskStorage({
@@ -30,22 +33,21 @@ router.get("/find/:id", getProductById);
 
 // GET add product form
 router.get("/add", (req, res, next) => {
-  res.render("pages/add-product", { title: "Add Product" });
+  res.render("pages/add-product", { title: "Add Product", mode: 'add',product: {name: '', description: '', price: '', imageUrl: ''}  });
 });
 // POST a single product: products/
 router.post("/add", upload.single('image'), createProduct);
 
 
+// GET add product form
+router.get("/edit/:id", updateProductForm);
+
 // Patch a single product: products/:id
 // When a client needs to replace an existing Resource entirely,
 // they can use PUT. When they're doing a partial update, they can use HTTP PATCH
-router.patch("/:id", (req, res, next) => {
-  res.json({ message: "update a product" });
-});
+router.patch("/edit/:id", updateProduct);
 
 // DELETE a single product: products/:id
-router.delete("/:id", (req, res, next) => {
-  res.json({ message: "delete a product" });
-});
+router.delete("/:id", deleteProduct);
 
 export default router;
